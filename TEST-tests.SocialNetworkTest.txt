@@ -1,0 +1,6 @@
+Testsuite: tests.SocialNetworkTest
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.035 sec
+
+Testcase: testUsers took 0.002 sec
+Testcase: testLink took 0.002 sec
+Testcase: testNeighborhood took 0.003 sec

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="test" name="eecs293_p2_amg188">
+	<property environment="env"/>
+	<property name="junit.output.dir" value="junit"/>
+	<property name="debuglevel" value="source,lines,vars"/>
+	<property name="target" value="1.7"/>
+	<property name="source" value="1.7"/>
+	<property name="src" location="./src"/>
+	<property name="bin" location="./bin"/>
+
+	
+	<path id="JUnit4.libraryclasspath"> <!-- where are our jars? -->
+		<pathelement location="junit.jar"/>
+		<pathelement location="org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+	</path>
+	<path id="eecs293_p2_amg188.classpath">
+		<pathelement location="bin"/> <!-- where do we put compiled bits? -->
+		<path refid="JUnit4.libraryclasspath"/>
+	</path>
+	<path id="test.classpath">
+		<pathelement location="${bin}/tests/"/>
+		<pathelement location="${src}"/>
+	</path>
+
+	<target name="clean">
+		        <delete dir="bin"/>
+	</target>
+	<target name="build" depends="clean">
+		<mkdir dir="./bin"/>
+		<echo message="${ant.project.name}: ${ant.file}"/>
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/main"/> <!-- where are our source files stored? -->
+			<classpath refid="JUnit4.libraryclasspath"/> <!-- import JUnit library so we can compile JUnit test cases! -->
+            <classpath refid="eecs293_p2_amg188.classpath"/> 
+        </javac>
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/tests"/> <!-- where are our source files stored? -->
+			<classpath refid="JUnit4.libraryclasspath"/> <!-- import JUnit library so we can compile JUnit test cases! -->
+            <classpath refid="eecs293_p2_amg188.classpath"/> 
+        </javac>
+    </target>
+	<target name="test" depends="build">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="plain"/>
+            <batchtest>
+       			<fileset dir="./bin/">
+            		<include name="**/*Test.class" />
+       			</fileset>
+    		</batchtest>
+            <classpath refid="eecs293_p2_amg188.classpath"/>
+        </junit>
+    </target>
+</project>
